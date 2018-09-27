@@ -9,7 +9,7 @@
 #### 使用Method
 * setOnSeekBarChangeListener
   ( 偵測SeekBar狀態 )
-```kotlin=
+```kotlin
 seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
         discount.setText(progress.toString() + "%")
@@ -26,7 +26,7 @@ seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
 ```
 * addTextChangedListener
   ( 偵測輸入文字變化 ) 
-```kotlin=
+```kotlin
 editText.addTextChangedListener(object :TextWatcher{
     override fun afterTextChanged(s: Editable?) {
     }

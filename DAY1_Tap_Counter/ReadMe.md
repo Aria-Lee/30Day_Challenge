@@ -10,7 +10,7 @@
 #### 使用Method
 * setOnClickListener
   ( 設定點擊事件 )
-```kotlin=
+```kotlin
 button.setOnClickListener {
     a = a+1
     textView.setText(a.toString())
@@ -18,7 +18,7 @@ button.setOnClickListener {
 ```
 * override fun onCreateOptionsMenu　
   ( 載入自定義Menu ) 
-```kotlin=
+```kotlin
 override fun onCreateOptionsMenu(menu: Menu?): Boolean {
     super.onCreateOptionsMenu(menu)
     menuInflater.inflate(R.menu.menu_main, menu)
@@ -27,7 +27,7 @@ override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 ```
 * override fun onOptionsItemSelected
   ( 設定自定義Menu Item的事件)
-``` kotlin=
+``` kotlin
 override fun onOptionsItemSelected(item: MenuItem): Boolean {
     if (item.itemId == R.id.reset) {
         a = 0
