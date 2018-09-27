@@ -13,14 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var m = 0
+        var pg = 0
         editText.setText("0")
 
         seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 discount.setText(progress.toString() + "%")
                 after.setText("${editText.text.toString().toFloat() * progress/100}")
-                m = progress
+                pg= progress
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -39,10 +39,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(editText.text.toString() != "")
-                after.setText("${editText.text.toString().toFloat() * m/100}")
+                after.setText("${editText.text.toString().toFloat() * pg/100}")
                 else after.setText("0")
             }
-
         })
     }
 }
