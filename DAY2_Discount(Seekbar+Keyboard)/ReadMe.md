@@ -48,5 +48,5 @@ editText.addTextChangedListener(object :TextWatcher{
 
 
 ###### tags: `SeekBar` `addTextChangedListener`
-> 　[name=Aria-Lee]　[time=Thu, Sep 27, 2018 5:10 PM]
+> 　 －Aria-Lee,  Sep 27 2018 5:10 PM
 
