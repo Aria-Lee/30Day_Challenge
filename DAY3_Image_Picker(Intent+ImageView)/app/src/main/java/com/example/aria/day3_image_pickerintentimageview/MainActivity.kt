@@ -1,7 +1,10 @@
 package com.example.aria.day3_image_pickerintentimageview
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
@@ -13,14 +16,16 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.widget.Toast
 
 
 class MainActivity : AppCompatActivity() {
 
     private companion object {
-        val PHOTO_FROM_GALLERY = 1
-        val PHOTO_FROM_CAMERA = 2
+        val PHOTO_FROM_GALLERY = 0
+        val PHOTO_FROM_CAMERA = 1
 
     }
 
@@ -42,7 +47,36 @@ class MainActivity : AppCompatActivity() {
     lateinit var saveUri: Uri
 
     fun permission() {
-        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.READ_EXTERNAL_STORAGE), 2)
+//       Log.wtf("aaaaa","READ" )
+//        }
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+//            Log.wtf("aaaaa","WRITE" )
+//
+//        }
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 0)
+//            Log.wtf("aaaaa","CAMERA" )
+//
+//        }
+
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.CAMERA), 0)
+//        }
+
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                == PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.CAMERA), 0)
+//        }
     }
 
     fun toAlbum() {
@@ -60,6 +94,55 @@ class MainActivity : AppCompatActivity() {
         saveUri = uriForCamera
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForCamera)
         startActivityForResult(intent, PHOTO_FROM_CAMERA)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
+        if (requestCode == 0) {
+
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, "相機將無法正常使用", Toast.LENGTH_SHORT).show()
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                    Log.wtf("aaaaa","0 : CAMERA Results DENIED to 1" )
+                }
+                Log.wtf("aaaaa","0 : CAMERA Results DENIED" )
+            }
+
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
+                    Log.wtf("aaaaa","0 : CAMERA Results GRANTED" )
+                }
+            }
+
+//            if (grantResults[1] == PackageManager.PERMISSION_DENIED){
+//                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
+//                Log.wtf("aaaaa","0 :WRITE Results DENIED" )
+//
+//            }
+//
+//            if (grantResults[2] == PackageManager.PERMISSION_DENIED){
+//                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
+//                Log.wtf("aaaaa","0 :READ Results DENIED" )
+//
+//            }
+        }
+
+        if (requestCode == 1){
+            if (grantResults[0] == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
+                Log.wtf("aaaaa","1 :WRITE Results DENIED" )
+
+            }
+
+            if (grantResults[1] == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
+                Log.wtf("aaaaa","1 :READ Results DENIED" )
+
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -89,7 +172,11 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
 
-
+    fun dailog(){
+        AlertDialog.Builder(this)
+                .setTitle("提醒")
+                .setMessage("相機功能將無法使用")
     }
 }

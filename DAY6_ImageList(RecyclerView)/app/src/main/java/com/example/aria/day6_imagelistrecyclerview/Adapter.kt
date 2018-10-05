@@ -9,10 +9,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import java.util.zip.Inflater
+import kotlinx.android.synthetic.main.image.view.*
 
-class Adapter(val contentList : List<content>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class Adapter(val contentList: List<content>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): Adapter.ViewHolder {
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.image,viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.image, viewGroup, false)
         return ViewHolder(view)
     }
 
@@ -23,11 +24,12 @@ class Adapter(val contentList : List<content>) : RecyclerView.Adapter<Adapter.Vi
         holder.bind(contentList[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val imageView = itemView.findViewById<ImageView>(R.id.imageView)
-        val textView = itemView.findViewById<TextView>(R.id.textView)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(content: content){
+        val imageView = itemView.imageView
+        val textView = itemView.textView
+
+        fun bind(content: content) {
             imageView.setImageResource(content.image)
             textView.setText(content.text)
             Log.wtf("aaaaa", content.image.toString())
