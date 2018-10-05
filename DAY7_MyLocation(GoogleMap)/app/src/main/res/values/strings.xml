@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DAY7_MyLocation(GoogleMap)</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
