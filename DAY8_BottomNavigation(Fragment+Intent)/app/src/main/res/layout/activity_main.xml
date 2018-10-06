@@ -18,11 +18,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation" />
 
+
     <FrameLayout
         android:id="@+id/center"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="54dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

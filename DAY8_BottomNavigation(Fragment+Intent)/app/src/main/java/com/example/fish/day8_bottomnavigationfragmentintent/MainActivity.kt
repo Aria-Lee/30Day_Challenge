@@ -10,8 +10,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    val intent = intent()
-    //    lateinit var fragment_1 : Fragment
+
     lateinit var manager: FragmentManager
     lateinit var transaction: FragmentTransaction
     override fun onCreate(savedInstanceState: Bundle?) {
