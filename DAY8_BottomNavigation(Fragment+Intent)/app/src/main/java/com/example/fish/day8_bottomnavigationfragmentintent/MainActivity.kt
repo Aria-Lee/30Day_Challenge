@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
+import android.util.Log
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val view = window.peekDecorView()
+        val view2 = window.decorView
+        Log.wtf("aaaaa", "view" + view.toString())
+        Log.wtf("aaaaa", "view2" + view2.toString())
         manager = supportFragmentManager
         showFragment(fragment_0, "fragment_0")
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     fun showFragment(frag: Fragment, tag: String) {
         transaction = manager.beginTransaction()
         if (manager.findFragmentByTag(tag) == null) {
-            transaction.add(R.id.center, frag, tag).show(frag).commit()
+            transaction.add(R.id.forFragment, frag, tag).show(frag).commit()
         } else {
             transaction.show(frag).commit()
         }

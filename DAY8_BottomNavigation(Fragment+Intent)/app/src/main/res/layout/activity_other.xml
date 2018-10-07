@@ -33,11 +33,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<fragment-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:name="com.example.fish.day8_bottomnavigationfragmentintent.Fragment_0"-->
-    <!--android:id="@+id/fragment_0"/>-->
-
-
 </android.support.constraint.ConstraintLayout>

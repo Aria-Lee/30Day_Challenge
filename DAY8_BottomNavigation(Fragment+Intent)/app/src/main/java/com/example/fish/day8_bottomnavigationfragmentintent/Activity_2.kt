@@ -3,6 +3,7 @@ package com.example.fish.day8_bottomnavigationfragmentintent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.transition.Visibility
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +18,7 @@ class Activity_2: AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         init()
-        other_button.setOnClickListener { intent.intent(this, Activity_3())}
+        other_button.setOnClickListener { intent.intent(this, Activity_3()) }
     }
 
     fun init(){

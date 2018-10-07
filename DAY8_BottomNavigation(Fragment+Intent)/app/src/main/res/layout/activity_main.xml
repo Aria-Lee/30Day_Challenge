@@ -18,9 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation" />
 
-
-    <FrameLayout
-        android:id="@+id/center"
+    <LinearLayout
+        android:id="@+id/forFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -28,11 +27,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--<fragment-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:name="com.example.fish.day8_bottomnavigationfragmentintent.Fragment_0"-->
-        <!--android:tag="fragment_0"/>-->
 
 </android.support.constraint.ConstraintLayout>

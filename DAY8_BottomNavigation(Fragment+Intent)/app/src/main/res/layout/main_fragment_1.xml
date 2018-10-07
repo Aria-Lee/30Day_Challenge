@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Fragment_0">
 
-
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <Button
             android:id="@+id/frag_button"
             android:layout_width="wrap_content"
@@ -38,7 +33,5 @@
             app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
