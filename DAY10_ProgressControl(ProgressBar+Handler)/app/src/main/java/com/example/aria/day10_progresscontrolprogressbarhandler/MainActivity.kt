@@ -1,6 +1,7 @@
 package com.example.aria.day10_progresscontrolprogressbarhandler
 
 import android.annotation.TargetApi
+import android.os.AsyncTask
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,63 +9,79 @@ import android.os.Handler
 import android.support.annotation.RequiresApi
 import android.util.Log
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
+import com.example.aria.day10_progresscontrolprogressbarhandler.R.id.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.sleep
 
 @TargetApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity() {
-
+    lateinit var progressTask: ProgressTask
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        initProgressTask()
         play.setOnClickListener(mOnClickListener)
         pause.setOnClickListener(mOnClickListener)
         stop.setOnClickListener(mOnClickListener)
     }
 
-    val handler = Handler()
-    @RequiresApi(Build.VERSION_CODES.N)
-    val progressIncreat = Runnable {
-        progressBar.progress
-//        {
-//            sleep(1000)
-            progressBar.incrementProgressBy(10)
-            Log.wtf("aaaa", "${progressBar.progress}")
-//            uiChange()
-        textView.setText("${progressBar.progress} %")
-
+//    val handler = Handler()
+//    @RequiresApi(Build.VERSION_CODES.N)
+//    val progressIncreat = Runnable {
+//        progressBar.progress
+////        {
+////            sleep(1000)
+//            progressBar.incrementProgressBy(10)
+//            Log.wtf("aaaa", "${progressBar.progress}")
+////            uiChange()
+//        textView.setText("${progressBar.progress} %")
+//
+////        }
+//    }
+//
+//    @RequiresApi(Build.VERSION_CODES.N)
+//    fun uiChange(){
+//        this@MainActivity.runOnUiThread {
+//            progressBar.setProgress(progressBar.progress, true)
+//            textView.setText("${progressBar.progress} %")
+//            Log.wtf("aaaa", "uiChange()"+ "${progressBar.progress} %")
+//
 //        }
-    }
+//    }
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun uiChange(){
-        this@MainActivity.runOnUiThread {
-            progressBar.setProgress(progressBar.progress, true)
-            textView.setText("${progressBar.progress} %")
-            Log.wtf("aaaa", "uiChange()"+ "${progressBar.progress} %")
 
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
     val mOnClickListener = View.OnClickListener { it ->
+
         when (it) {
             play -> {
-                handler.postDelayed(progressIncreat, 1000)
+                if(progressTask.status == AsyncTask.Status.RUNNING){
+                    Toast.makeText(this, "程序已在執行中", Toast.LENGTH_LONG).show()
+                }
+                else progressTask.execute(this)
             }
 
             pause -> {
-                handler.removeCallbacks(progressIncreat)
+                progressTask.cancel(true)
+                initProgressTask()
             }
 
             stop -> {
-                handler.removeCallbacks(progressIncreat)
-                progressBar.setProgress(0,true)
+                progressTask.cancel(true)
+                progressBar.setProgress(0, true)
                 textView.setText("0 %")
+                initProgressTask()
             }
 
         }
+    }
+
+    fun initProgressTask(){
+        progressTask = ProgressTask()
+        progressTask.progressBar = progressBar
+        progressTask.textView = textView
     }
 
 
