@@ -28,31 +28,6 @@ class MainActivity : AppCompatActivity() {
         stop.setOnClickListener(mOnClickListener)
     }
 
-//    val handler = Handler()
-//    @RequiresApi(Build.VERSION_CODES.N)
-//    val progressIncreat = Runnable {
-//        progressBar.progress
-////        {
-////            sleep(1000)
-//            progressBar.incrementProgressBy(10)
-//            Log.wtf("aaaa", "${progressBar.progress}")
-////            uiChange()
-//        textView.setText("${progressBar.progress} %")
-//
-////        }
-//    }
-//
-//    @RequiresApi(Build.VERSION_CODES.N)
-//    fun uiChange(){
-//        this@MainActivity.runOnUiThread {
-//            progressBar.setProgress(progressBar.progress, true)
-//            textView.setText("${progressBar.progress} %")
-//            Log.wtf("aaaa", "uiChange()"+ "${progressBar.progress} %")
-//
-//        }
-//    }
-
-
     val mOnClickListener = View.OnClickListener { it ->
 
         when (it) {
