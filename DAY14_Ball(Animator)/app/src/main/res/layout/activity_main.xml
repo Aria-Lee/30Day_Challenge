@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/value_ani"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFFFBB"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="ValueAnimator"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/object_ani"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#CCFF99"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="ObjectAnimator"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/value_ani" />
+
+    <TextView
+        android:id="@+id/set"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#BBFFEE"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="AnimatorSet"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/object_ani" />
+
+    <TextView
+        android:id="@+id/interpolator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="Interpolator"
+        android:background="#CCDDFF"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/set" />
+</android.support.constraint.ConstraintLayout>

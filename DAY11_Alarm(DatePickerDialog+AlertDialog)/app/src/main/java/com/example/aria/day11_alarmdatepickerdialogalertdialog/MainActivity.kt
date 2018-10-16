@@ -79,7 +79,8 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min->
-        calender.set(hour, min)
+        calender.set(Calendar.HOUR_OF_DAY, hour)
+        calender.set(Calendar.MINUTE, min)
         format("HH : mm", time_edit)
     }
 
