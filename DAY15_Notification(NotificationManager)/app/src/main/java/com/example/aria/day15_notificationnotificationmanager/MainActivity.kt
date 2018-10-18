@@ -37,10 +37,7 @@ class MainActivity : AppCompatActivity() {
         builder.setSmallIcon(R.drawable.ic_directions_walk_black_24dp)
                 .setContentTitle("Day15")
                 .setContentText("Day15 Challenge")
-                .setLargeIcon(BitmapFactory.decodeResource(resources,R.drawable.ic_wc_black_24dp))
-//                .setPriority(Notification.PRIORITY_HIGH)
-//                .setDefaults(Notification.DEFAULT_ALL)
-//                .setContentIntent(pendingIntent)
+                .setLargeIcon(BitmapFactory.decodeResource(resources,R.mipmap.ic_launcher_test))
                 .setAutoCancel(true)
     }
 }

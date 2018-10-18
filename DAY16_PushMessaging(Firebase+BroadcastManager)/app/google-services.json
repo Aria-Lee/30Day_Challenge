@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "464967537022",
+    "firebase_url": "https://day16pushmessaging.firebaseio.com",
+    "project_id": "day16pushmessaging",
+    "storage_bucket": "day16pushmessaging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464967537022:android:a09cd0463eec3c0c",
+        "android_client_info": {
+          "package_name": "com.example.aria.day16_pushmessagingfirebasebroadcastmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "464967537022-hdi89lhfl2nvsqa95enqevhqs37hln14.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aria.day16_pushmessagingfirebasebroadcastmanager",
+            "certificate_hash": "55dda5dd484d3a6cd1efce781fad8d30154cae36"
+          }
+        },
+        {
+          "client_id": "464967537022-15mhni4d1ip7cqq1f2447ks2km20l358.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_2vKYDDJsRULeI9E2CoHkBeH40cvkem8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "464967537022-15mhni4d1ip7cqq1f2447ks2km20l358.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
