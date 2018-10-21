@@ -18,10 +18,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            resValue ("string", "API_KEY", GoogleMapKey)
-
         }
-        debug{
+        debug {
             resValue ("string", "API_KEY", GoogleMapKey)
         }
     }

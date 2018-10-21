@@ -42,11 +42,12 @@ class MainActivity : AppCompatActivity() {
                 val snackBar = Snackbar.make(thisView, "無定位功能無法執行程序", Snackbar.LENGTH_INDEFINITE)
                 snackBar.setAction("OK", object : View.OnClickListener {
                     override fun onClick(v: View?) {
-                        snackBar.dismiss()
+                        snackBar.setText("aaaaaaaa")
+//                        snackBar.dismiss()
                     }
-                }).setActionTextColor(Color.LTGRAY)
+                })
+                        .setActionTextColor(Color.LTGRAY)
                         .show()
-//                Toast.makeText(this, "無定位功能無法執行程序", Toast.LENGTH_SHORT).show()
             }
         }
     }
