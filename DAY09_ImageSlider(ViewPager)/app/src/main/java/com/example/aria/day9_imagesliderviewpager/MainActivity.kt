@@ -22,8 +22,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addToList(){
-        for( i in R.drawable.image01 .. R.drawable.image10){
-            list.add(i)
+        for (i in 1..16){
+            val name = "avatar_$i"
+            val id = resources.getIdentifier(name, "drawable", packageName)
+            list.add(id)
         }
     }
 
@@ -40,7 +42,4 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-
 }

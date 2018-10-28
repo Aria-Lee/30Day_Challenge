@@ -3,9 +3,12 @@ package com.example.fish.day8_bottomnavigationfragmentintent
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_fragment_1.*
 import kotlinx.android.synthetic.main.main_fragment_1.view.*
 
 // TODO: Rename parameter arguments, choose names that match
