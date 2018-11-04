@@ -25,8 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/startAndPause" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/stop"
-            android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="@+id/guideline"
-    />
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/guideline"/>
     <Button
             android:text="STOP"
             android:layout_width="wrap_content"
@@ -46,15 +45,29 @@
             android:text="Volume : 50 %"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" android:layout_marginTop="56dp"
+            android:id="@+id/textView" android:layout_marginTop="48dp"
             app:layout_constraintTop_toBottomOf="@+id/startAndPause" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
     <SeekBar
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/progressSeekBar"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/startAndPause" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/stop" android:layout_marginEnd="8dp"/>
+            app:layout_constraintEnd_toEndOf="@+id/stop" android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/startAndPause" android:layout_marginBottom="24dp"/>
+    <Button
+            android:text="RECORD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/record" android:layout_marginTop="48dp"
+            app:layout_constraintTop_toBottomOf="@+id/seekBar" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/choose"/>
+    <Button
+            android:text="Choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/choose"
+            app:layout_constraintStart_toEndOf="@+id/record" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/record"
+            app:layout_constraintBottom_toBottomOf="@+id/record"/>
 </android.support.constraint.ConstraintLayout>
