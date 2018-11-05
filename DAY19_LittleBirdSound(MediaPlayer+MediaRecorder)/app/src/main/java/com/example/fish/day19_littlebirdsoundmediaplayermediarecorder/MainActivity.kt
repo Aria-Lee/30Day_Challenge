@@ -33,6 +33,7 @@ import com.example.fish.day19_littlebirdsoundmediaplayermediarecorder.R.id.textV
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.net.URI
+import java.util.*
 import java.util.jar.Manifest
 
 @TargetApi(Build.VERSION_CODES.N)
@@ -189,9 +190,10 @@ class MainActivity : AppCompatActivity() {
 
     val recordListener = View.OnClickListener {
         it as Button
+        val time = Date().time
         when (it .text) {
             "RECORD" -> {
-                oriFile = File(Environment.getExternalStorageDirectory() , "aaaaa/new.3gp")
+                oriFile = File(getFilesDir() , "new-$time.3gp")
                 myUri = FileProvider.getUriForFile(this, "day19",oriFile)
                 mediaRecorder = MediaRecorder()
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -206,7 +208,7 @@ class MainActivity : AppCompatActivity() {
             "STOP" -> {
                 mediaRecorder.stop()
                 mediaRecorder.release()
-                mediaPlayer = MediaPlayer.create(this, myUri)
+                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(oriFile))
                 mediaPlayerAndProgressUpdate()
                 it.text = "RECORD"
             }
@@ -217,8 +219,8 @@ class MainActivity : AppCompatActivity() {
 //    val chooseListener = View.OnClickListener {
 ////        val uri = Uri.parse(Environment.getExternalStorageDirectory().getPath())
 ////                + "/Alarms/")
-////        val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-////        val volume = storageManager.primaryStorageVolume
+//        val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
+//        val volume = storageManager.primaryStorageVolume
 ////        uri = FileProvider.getUriForFile(this, "day19",Environment.getExternalStorageDirectory())
 ////        val intent = volume.createAccessIntent(Environment.DIRECTORY_ALARMS)
 //        val file = File(Environment.getExternalStorageDirectory(), "/aaaaa")
@@ -226,13 +228,18 @@ class MainActivity : AppCompatActivity() {
 //
 //        val uri = FileProvider.getUriForFile(this, "day19", file)
 //        grantUriPermission(this.packageName, uri, FLAG_GRANT_READ_URI_PERMISSION)
+//        println("**********  ${uri}")
+//
 ////        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-//        val intent = Intent(Intent.ACTION_VIEW)
+////        val intent = Intent(Intent.ACTION_PICK, Uri.parse("content://day19/external-path/"))
 //
 ////        intent.addCategory(Intent.CATEGORY_OPENABLE)
-//        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,uri)
-////        intent.setType("*/*")
-//        println("**********  ${uri}")
+////        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,Uri.fromFile(file))
+////        intent.type = "*/*"
+//        intent.setDataAndType(Uri.parse("content://day19/external-path/"),"*/*")
+//        println(android.provider.MediaStore.Files.getContentUri("external"))
+//        println(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
+//
 ////        intent.flags= FLAG_GRANT_READ_URI_PERMISSION
 //
 ////         val intent = Intent(ACTION_PICK,
@@ -241,10 +248,11 @@ class MainActivity : AppCompatActivity() {
 ////        intent.addCategory(Intent.CATEGORY_APP_MUSIC)
 ////        println("********** $uri")
 //
-////        val intent = Intent(Intent.ACTION_GET_CONTENT)
-////        intent.setType("*/*")
-////        startActivityForResult(intent, 0)
-//        startActivity(Intent.createChooser(intent, "choose"))
+//        val intent = Intent(Intent.ACTION_PICK,android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI)
+//
+//
+//        startActivityForResult(intent, 0)
+////        startActivity(Intent.createChooser(intent, "choose"))
 //    }
 //
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

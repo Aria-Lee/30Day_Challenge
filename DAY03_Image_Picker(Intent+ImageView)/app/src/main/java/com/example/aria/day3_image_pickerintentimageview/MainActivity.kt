@@ -47,36 +47,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var saveUri: Uri
 
     fun permission() {
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.READ_EXTERNAL_STORAGE), 2)
-//       Log.wtf("aaaaa","READ" )
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
-//            Log.wtf("aaaaa","WRITE" )
-//
-//        }
-//
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.CAMERA), 0)
-//            Log.wtf("aaaaa","CAMERA" )
-//
-//        }
-
-//
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.CAMERA), 0)
-//        }
-
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                == PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.CAMERA), 0)
-//        }
     }
 
     fun toAlbum() {
@@ -88,7 +59,6 @@ class MainActivity : AppCompatActivity() {
     fun toCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         val tmpFile = File(Environment.getExternalStorageDirectory().toString(), System.currentTimeMillis().toString() + ".jpg")
-//        tmpFile.createNewFile()
         val uriForCamera = FileProvider.getUriForFile(this, "com.example.aria.day3_image_pickerintentimageview.fileprovider", tmpFile)
 
         saveUri = uriForCamera
@@ -117,17 +87,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-//            if (grantResults[1] == PackageManager.PERMISSION_DENIED){
-//                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
-//                Log.wtf("aaaaa","0 :WRITE Results DENIED" )
-//
-//            }
-//
-//            if (grantResults[2] == PackageManager.PERMISSION_DENIED){
-//                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
-//                Log.wtf("aaaaa","0 :READ Results DENIED" )
-//
-//            }
         }
 
         if (requestCode == 1){
