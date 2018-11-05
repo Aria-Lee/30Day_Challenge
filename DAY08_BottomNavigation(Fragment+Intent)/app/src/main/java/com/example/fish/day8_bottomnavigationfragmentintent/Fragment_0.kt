@@ -3,6 +3,7 @@ package com.example.fish.day8_bottomnavigationfragmentintent
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,8 +23,35 @@ class Fragment_0 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        Log.wtf("aaaaa", "onCreatView")
         val view = inflater.inflate(R.layout.main_fragment_1, container, false)
         view!!.frag_button.setOnClickListener { intent.intent(this.context, Activity_2()) }
         return view
     }
+
+    override fun onPause() {
+        Log.wtf("aaaaaa", "pause")
+
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.wtf("aaaaaa", "stop")
+
+        super.onStop()
+    }
+
+    override fun onStart() {
+        Log.wtf("aaaaaa", "start")
+
+        super.onStart()
+
+    }
+
+    override fun onResume() {
+        Log.wtf("aaaaaa", "Resume")
+
+        super.onResume()
+    }
+
 }

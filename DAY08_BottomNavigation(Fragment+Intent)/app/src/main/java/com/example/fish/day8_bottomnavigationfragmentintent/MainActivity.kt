@@ -14,20 +14,23 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var manager: FragmentManager
     lateinit var transaction: FragmentTransaction
+    lateinit var fragment_0: Fragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val view = window.peekDecorView()
         val view2 = window.decorView
-        Log.wtf("aaaaa", "view" + view.toString())
-        Log.wtf("aaaaa", "view2" + view2.toString())
+//        Log.wtf("aaaaa", "view" + view.toString())
+//        Log.wtf("aaaaa", "view2" + view2.toString())
         manager = supportFragmentManager
-        showFragment(fragment_0, "fragment_0")
+//        showFragment(fragment_0, "fragment_0")
+        fragment_0 = manager.findFragmentById(R.id.frag) as Fragment
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
-    val fragment_0 = Fragment_0()
+//    val fragment_0 = Fragment_0()
     val fragment_2 = Fragment_2()
     val fragment_1 = Fragment_1()
 
@@ -36,19 +39,25 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.main -> {
                     showFragment(fragment_0, "fragment_0")
-                    hideFragment(fragment_1, fragment_2)
+//                    hideFragment(fragment_1, fragment_2)
+                    transaction.commit()
+
                     return true
                 }
 
                 R.id.chat -> {
                     showFragment(fragment_1, "fragment_1")
-                    hideFragment(fragment_0, fragment_2)
+//                    hideFragment(fragment_0, fragment_2)
+                    transaction.commit()
+
                     return true
                 }
 
                 R.id.profile -> {
                     showFragment(fragment_2, "fragment_2")
-                    hideFragment(fragment_0, fragment_1)
+//                    hideFragment(fragment_0, fragment_1)
+                    transaction.commit()
+
                     return true
                 }
             }
@@ -59,9 +68,9 @@ class MainActivity : AppCompatActivity() {
     fun showFragment(frag: Fragment, tag: String) {
         transaction = manager.beginTransaction()
         if (manager.findFragmentByTag(tag) == null) {
-            transaction.add(R.id.forFragment, frag, tag).show(frag).commit()
+            transaction.add(R.id.forFragment, frag, tag)
         } else {
-            transaction.show(frag).commit()
+            transaction.show(frag)
         }
     }
 
