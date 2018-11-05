@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.annotation.TargetApi
 import android.app.Activity
 import android.app.Application
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
@@ -225,9 +226,14 @@ class MainActivity : AppCompatActivity() {
 //
 //        val uri = FileProvider.getUriForFile(this, "day19", file)
 //        grantUriPermission(this.packageName, uri, FLAG_GRANT_READ_URI_PERMISSION)
-//        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT, uri )
+////        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//        val intent = Intent(Intent.ACTION_VIEW)
+//
+////        intent.addCategory(Intent.CATEGORY_OPENABLE)
+//        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,uri)
+////        intent.setType("*/*")
 //        println("**********  ${uri}")
-//        intent.flags= FLAG_GRANT_READ_URI_PERMISSION
+////        intent.flags= FLAG_GRANT_READ_URI_PERMISSION
 //
 ////         val intent = Intent(ACTION_PICK,
 ////             )
@@ -236,11 +242,11 @@ class MainActivity : AppCompatActivity() {
 ////        println("********** $uri")
 //
 ////        val intent = Intent(Intent.ACTION_GET_CONTENT)
-//        intent.setType("*/*")
-//        startActivityForResult(intent, 0)
-////        startActivity(Intent.createChooser(intent, "choose"))
+////        intent.setType("*/*")
+////        startActivityForResult(intent, 0)
+//        startActivity(Intent.createChooser(intent, "choose"))
 //    }
-
+//
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
 //        when (requestCode){
