@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_fragment_1.*
 import kotlinx.android.synthetic.main.main_fragment_1.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +25,6 @@ class Fragment_0 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.wtf("aaaaa", "onCreatView")
         val view = inflater.inflate(R.layout.main_fragment_1, container, false)
         view!!.frag_button.setOnClickListener { intent.intent(this.context, Activity_2()) }
         return view

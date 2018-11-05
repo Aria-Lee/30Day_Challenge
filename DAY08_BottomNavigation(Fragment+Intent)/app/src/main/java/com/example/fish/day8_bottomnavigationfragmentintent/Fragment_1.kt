@@ -23,11 +23,7 @@ class Fragment_1 : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.wtf("aaaaa", "1:"+container.toString())
 
-        val view = inflater.inflate(R.layout.fragment_blank, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_blank, container, false)
     }
-
-
 }
