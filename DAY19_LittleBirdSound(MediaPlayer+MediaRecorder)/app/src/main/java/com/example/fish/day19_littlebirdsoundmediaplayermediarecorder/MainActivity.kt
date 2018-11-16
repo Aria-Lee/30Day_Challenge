@@ -2,6 +2,7 @@ package com.example.fish.day19_littlebirdsoundmediaplayermediarecorder
 
 import android.animation.ObjectAnimator
 import android.annotation.TargetApi
+import android.app.ActionBar
 import android.app.Activity
 import android.app.Application
 import android.content.ContentResolver
@@ -9,7 +10,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.*
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.AudioRecord
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -23,14 +26,21 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.FileProvider
 import android.support.v4.provider.DocumentFile
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils.split
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.SeekBar
 import com.example.fish.day19_littlebirdsoundmediaplayermediarecorder.R.id.textView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.choosefile.*
+import kotlinx.android.synthetic.main.choosefile.view.*
+import kotlinx.android.synthetic.main.edit_name.*
+import kotlinx.android.synthetic.main.edit_name.view.*
 import java.io.File
 import java.net.URI
 import java.util.*
@@ -43,8 +53,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var animator: ObjectAnimator
     lateinit var thread: Thread
     val handler = Handler()
-    lateinit var myUri : Uri
-    lateinit var oriFile : File
+    lateinit var myUri: Uri
+    lateinit var oriFile: File
+    val dataList = mutableListOf<Data>()
+    lateinit var chooseFileUri: Uri
+    var chooseFilePosition: Int? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -66,20 +81,21 @@ class MainActivity : AppCompatActivity() {
         seekBar.setOnSeekBarChangeListener(seekBarListener)
         progressSeekBar.setOnSeekBarChangeListener(progressSeekBarListener)
         record.setOnClickListener(recordListener)
-//        choose.setOnClickListener(chooseListener)
+        choose.setOnClickListener(chooseListener)
         setThread()
         getPermission()
         addDirectory()
     }
 
-    fun addDirectory(){
-        val file=File(Environment.getExternalStorageDirectory().path+"/aaaaa")
-        if(!file.exists()) file.mkdir()
+    fun addDirectory() {
+        val file = File(Environment.getExternalStorageDirectory().path + "/aaaaa")
+        if (!file.exists()) file.mkdir()
     }
 
-    fun mediaPlayerAndProgressUpdate(){
+    fun mediaPlayerAndProgressUpdate() {
         mediaPlayer.setOnCompletionListener(mediaPlayerListener)
         this.progressSeekBar.max = mediaPlayer.duration
+        this.progressSeekBar.progress = 0
     }
 
     fun setThread() {
@@ -93,9 +109,9 @@ class MainActivity : AppCompatActivity() {
 
     fun getPermission() {
         if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.RECORD_AUDIO
-            ) != PackageManager.PERMISSION_GRANTED
+                        this,
+                        android.Manifest.permission.RECORD_AUDIO
+                ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE), 0)
         }
@@ -106,10 +122,10 @@ class MainActivity : AppCompatActivity() {
             0 -> {
                 if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
                     AlertDialog.Builder(this)
-                        .setTitle("提醒")
-                        .setMessage("無提供麥克風權限將無法使用錄音功能")
-                        .create()
-                        .show()
+                            .setTitle("提醒")
+                            .setMessage("無提供麥克風權限將無法使用錄音功能")
+                            .create()
+                            .show()
                 }
             }
         }
@@ -191,10 +207,10 @@ class MainActivity : AppCompatActivity() {
     val recordListener = View.OnClickListener {
         it as Button
         val time = Date().time
-        when (it .text) {
+        when (it.text) {
             "RECORD" -> {
-                oriFile = File(getFilesDir() , "new-$time.3gp")
-                myUri = FileProvider.getUriForFile(this, "day19",oriFile)
+                oriFile = File(Environment.getExternalStorageDirectory(), "aaaaa/new.3gp")
+                myUri = FileProvider.getUriForFile(this, "day19", oriFile)
                 mediaRecorder = MediaRecorder()
                 mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
                 mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -208,88 +224,89 @@ class MainActivity : AppCompatActivity() {
             "STOP" -> {
                 mediaRecorder.stop()
                 mediaRecorder.release()
-                mediaPlayer = MediaPlayer.create(this, Uri.fromFile(oriFile))
-                mediaPlayerAndProgressUpdate()
+
+                val view = LayoutInflater.from(this).inflate(R.layout.edit_name, null)
+                AlertDialog.Builder(this)
+                        .setView(view)
+                        .setTitle("命名錄音")
+                        .setPositiveButton("OK") { dialog, which ->
+                            val newFile = File(Environment.getExternalStorageDirectory(), "aaaaa/${view.editText.text}.3gp")
+                            oriFile.renameTo(newFile)
+                        }
+                        .setNegativeButton("cancel"){dialog, which ->
+                            oriFile.delete()
+                        }
+                        .create()
+                        .show()
+
                 it.text = "RECORD"
             }
         }
 
     }
 
-//    val chooseListener = View.OnClickListener {
-////        val uri = Uri.parse(Environment.getExternalStorageDirectory().getPath())
-////                + "/Alarms/")
-//        val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-//        val volume = storageManager.primaryStorageVolume
-////        uri = FileProvider.getUriForFile(this, "day19",Environment.getExternalStorageDirectory())
-////        val intent = volume.createAccessIntent(Environment.DIRECTORY_ALARMS)
-//        val file = File(Environment.getExternalStorageDirectory(), "/aaaaa")
-//        println("**********  ${Uri.fromFile(file)}")
-//
-//        val uri = FileProvider.getUriForFile(this, "day19", file)
-//        grantUriPermission(this.packageName, uri, FLAG_GRANT_READ_URI_PERMISSION)
-//        println("**********  ${uri}")
-//
-////        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-////        val intent = Intent(Intent.ACTION_PICK, Uri.parse("content://day19/external-path/"))
-//
-////        intent.addCategory(Intent.CATEGORY_OPENABLE)
-////        intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI,Uri.fromFile(file))
-////        intent.type = "*/*"
-//        intent.setDataAndType(Uri.parse("content://day19/external-path/"),"*/*")
-//        println(android.provider.MediaStore.Files.getContentUri("external"))
-//        println(android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
-//
-////        intent.flags= FLAG_GRANT_READ_URI_PERMISSION
-//
-////         val intent = Intent(ACTION_PICK,
-////             )
-//
-////        intent.addCategory(Intent.CATEGORY_APP_MUSIC)
-////        println("********** $uri")
-//
-//        val intent = Intent(Intent.ACTION_PICK,android.provider.MediaStore.Audio.Media.INTERNAL_CONTENT_URI)
-//
-//
-//        startActivityForResult(intent, 0)
-////        startActivity(Intent.createChooser(intent, "choose"))
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        when (requestCode){
-//            0 ->{
-//                when (resultCode) {
-//                    Activity.RESULT_OK -> {
-//                        val uri = data!!.data
-//                        println("********** RESULT_OK $uri")
-////                        val a = DocumentFile.fromTreeUri(this, uri)
-////                        val b =  a!!.findFile("Alarms")
-////                        println("********** RESULT_OK a ${a.uri}")
-////                        println("********** RESULT_OK b ${b?.uri}")
-////                        if ("com.android.externalstorage.documents".equals(uri.getAuthority())) { // 【ExternalStorageProvider】
-////                            val id = DocumentsContract.getDocumentId(uri)
-////                            val split = id.split(":")
-////                            val type = split[0]
-////                            if ("primary".equals(type, ignoreCase = true)) println("********** RESULT_OK ${Environment.getExternalStorageDirectory()}  /  $split[1]}")
-////                        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-////                        val a = DocumentFile.fromTreeUri(this, uri)
-////////                        println("********** ${a!!.uri}")
-////                        val intent = Intent(ACTION_OPEN_DOCUMENT_TREE, uri)
-//////
-//////
-////                        intent.setType("video/3gp")
-////                        startActivityForResult(intent, 1)
-//
-////                        val dataUri = data!!.data
-////                        mediaPlayer.release()
-////                        mediaPlayer = MediaPlayer.create(this, dataUri)
-//                    }
-//                    Activity.RESULT_CANCELED -> {
-//                        Log.wtf("getImageResult", resultCode.toString())
-//                    }
-//                }
-//            }
-//        }
-//    }
+    val chooseListener = View.OnClickListener {
+
+        chooseFilePosition = null
+        dataList.clear()
+        prepareFile()
+
+        val adapter = Adapter(this, dataList)
+        adapter.setOnItemClick(object : Adapter.OnItemClickListener {
+            override fun onClick(position: Int) {
+                if (chooseFilePosition != null) dataList[chooseFilePosition!!].color = Color.argb(0, 0, 0, 0)
+                chooseFilePosition = position
+                dataList[chooseFilePosition!!].color = Color.rgb(194, 194, 194)
+            }
+        })
+
+        println("*********" + dataList.toString())
+
+        val view = LayoutInflater.from(this).inflate(R.layout.choosefile, null)
+        view.recyclerView.adapter = adapter
+        view.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        AlertDialog.Builder(this)
+                .setView(view)
+                .setTitle("選擇檔案")
+                .setPositiveButton("ok") { dialog, which ->
+                    if (chooseFilePosition != null) setChooseFile(dataList[chooseFilePosition!!].uri)
+                }
+                .setNegativeButton("cancel") { dialog, which ->
+                }
+                .create()
+                .show()
+
+    }
+
+    fun prepareFile() {
+        val oriUri = Uri.parse("android.resource://com.example.fish.day19_littlebirdsoundmediaplayermediarecorder/raw/country_cue_1.mp3")
+        val initFile = File(oriUri.path)
+        val file = File(Environment.getExternalStorageDirectory(), "/aaaaa")
+        val fileList = file.listFiles()
+        val mr = MediaMetadataRetriever()
+
+        for (i in 0 until fileList.size) {
+            dataList.add(getFileInfor(mr, fileList[i]))
+        }
+//        dataList.add(getFileInfor(mr, initFile))
+    }
+
+    fun getFileInfor(mr: MediaMetadataRetriever, file: File): Data {
+        val p = Environment.getExternalStorageDirectory().path + "/aaaaa/"
+        println("********* ${file.path}")
+        println("********* $p")
+        mr.setDataSource(file.path)
+        val duration = mr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toLong()
+        val name = file.name
+        val time = " ${duration / 6000}:${duration % 6000 / 1000}"
+        return Data(Uri.fromFile(file), name, time, Color.argb(0, 0, 0, 0))
+    }
+
+    fun setChooseFile(uri: Uri) {
+        mediaPlayer.release()
+        mediaPlayer = MediaPlayer.create(this, uri)
+        mediaPlayerAndProgressUpdate()
+    }
+
 }
