@@ -19,9 +19,11 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.widget.Toast
+import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
+    var saveUri: Uri? = null
 
     private companion object {
         val PHOTO_FROM_GALLERY = 0
@@ -33,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState != null) {
+            saveUri = Uri.parse(savedInstanceState.getString("saveUri"))
+        }
         permission()
 
         toAlbum.setOnClickListener {
@@ -44,10 +49,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    lateinit var saveUri: Uri
 
     fun permission() {
-            ActivityCompat.requestPermissions(this, arrayOf( android.Manifest.permission.CAMERA), 0)
+        val permissionList = arrayListOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        var size = permissionList.size
+        var i = 0
+        while (i < size) {
+            if (ActivityCompat.checkSelfPermission(this, permissionList[i]) == PackageManager.PERMISSION_GRANTED) {
+                permissionList.removeAt(i)
+                i -= 1
+                size -= 1
+            }
+            i += 1
+        }
+        val array = arrayOfNulls<String>(permissionList.size)
+        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions(this, permissionList.toArray(array), 0)
     }
 
     fun toAlbum() {
@@ -66,41 +82,11 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, PHOTO_FROM_CAMERA)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray){
-        if (requestCode == 0) {
-
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, "相機將無法正常使用", Toast.LENGTH_SHORT).show()
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-                    Log.wtf("aaaaa","0 : CAMERA Results DENIED to 1" )
-                }
-                Log.wtf("aaaaa","0 : CAMERA Results DENIED" )
-            }
-
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE,android.Manifest.permission.READ_EXTERNAL_STORAGE), 1)
-                    Log.wtf("aaaaa","0 : CAMERA Results GRANTED" )
-                }
-            }
-
-        }
-
-        if (requestCode == 1){
-            if (grantResults[0] == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
-                Log.wtf("aaaaa","1 :WRITE Results DENIED" )
-
-            }
-
-            if (grantResults[1] == PackageManager.PERMISSION_DENIED){
-                Toast.makeText(this, "存取將無法正常使用", Toast.LENGTH_SHORT).show()
-                Log.wtf("aaaaa","1 :READ Results DENIED" )
-
-            }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if(saveUri != null){
+            val uriString = saveUri.toString()
+            outState.putString("saveUri", uriString)
         }
     }
 
